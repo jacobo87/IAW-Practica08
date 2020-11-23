@@ -13,9 +13,9 @@ Despliega la última versión de Worpress utilizando la siguiente arquitectura p
 
 La arquitectura estará formada por:
 
-- Un balanceador de carga, implementado con un Apache HTTP Server configurado como proxy inverso.
-- Una capa de front-end, formada por dos servidores web con Apache HTTP Server.
-- Una capa de back-end, formada por un servidor MySQL.
+- Un balanceador de carga, implementado con un [Apache HTTP Server](https://www.apache.org/) configurado como [proxy inverso](https://httpd.apache.org/docs/trunk/es/howto/reverse_proxy.html).
+- Una capa de front-end, formada por dos servidores web con [Apache HTTP Server](https://www.apache.org/).
+- Una capa de back-end, formada por un servidor [MySQL](https://www.mysql.com/).
 
 Necesitará crear las siguientes máquinas virtuales:
 
