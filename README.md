@@ -24,6 +24,13 @@ Necesitará crear las siguientes máquinas virtuales:
 - Frontal Web 2.
 - Servidor de Base de Datos MySQL.
 
+## REFERENCIAS
+- https://josejuansanchez.org/iaw/practica-08/index.html
+- [Apache HTTP Server](https://www.apache.org/)
+- [proxy inverso](https://httpd.apache.org/docs/trunk/es/howto/reverse_proxy.html)
+- [MySQL](https://www.mysql.com/)
+- [mermaid](https://mermaid-js.github.io/mermaid/#/)
+
 
 
 
