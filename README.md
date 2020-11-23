@@ -29,6 +29,8 @@ Necesitará crear las siguientes máquinas virtuales:
 - [Apache HTTP Server](https://www.apache.org/)
 - [proxy inverso](https://httpd.apache.org/docs/trunk/es/howto/reverse_proxy.html)
 - [MySQL](https://www.mysql.com/)
+- [Instalación Wordpress](https://wordpress.org/support/article/how-to-install-wordpress/)
+- [Configuración php Wordpress](https://wordpress.org/support/article/editing-wp-config-php/)
 - [mermaid](https://mermaid-js.github.io/mermaid/#/)
 
 
