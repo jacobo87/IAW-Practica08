@@ -24,6 +24,13 @@ Necesitará crear las siguientes máquinas virtuales:
 - Frontal Web 2.
 - Servidor de Base de Datos MySQL.
 
+Las fases son las siguientes:
+
+- Fase 0. Instalación de Wordpress en un nivel (**Un único servidor con todo lo necesario**).
+- Fase 1. Instalación de Wordpress en dos niveles (**Servidor web, Servidor MySQL**).
+- Fase 2. Instalación de Wordpress en tres niveles (**Balanceador, 2 Servidores webs, Servidor MySQL**).
+
+
 ## REFERENCIAS
 - https://josejuansanchez.org/iaw/practica-08/index.html
 - [Apache HTTP Server](https://www.apache.org/)
