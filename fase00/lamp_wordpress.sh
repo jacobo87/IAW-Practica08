@@ -19,6 +19,8 @@ apt update
 # ------------------------------ Instalamos Front-end ----------------------------------------
 # Instalamos Servidor Web Apache
 apt install apache2 -y
+# Instalamos los módulos necesarios de PHP
+apt install php libapache2-mod-php php-mysql -y
 # Instalamos Wordpress
 wget https://wordpress.org/latest.tar.gz
 tar -xzvf latest.tar.gz
