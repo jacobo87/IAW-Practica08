@@ -3,7 +3,7 @@
 Contenido de la **fase00**:
 
 - ```000-default.conf```:
-	- Archivo de configuración con acceso restringido a la carpeta stats. 
+	- Archivo de configuración con acceso restringido a la carpeta ```stats```. 
     > Este archivo lo usaremos si más a delante queremos instalar herramientas adicionales para nuestro sitio. 
 
 - ```config.inc.php```:
