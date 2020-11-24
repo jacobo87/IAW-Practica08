@@ -65,3 +65,4 @@ mysql -u root <<< "FLUSH PRIVILEGES;"
 apt install php libapache2-mod-php php-mysql -y
 # Introducimos la base de tados de Wordpress
 mysql -u root -p$DB_ROOT_PASSWD < /home/ubuntu/database.sql
+

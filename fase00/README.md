@@ -22,3 +22,6 @@ Contenido de la **fase00**:
 
 - ```wp-config.php```:
 	- Archivo de configuración para la base de datos php de Wordpress.
+
+- ```info.php```:
+	- Archivo de información php.
