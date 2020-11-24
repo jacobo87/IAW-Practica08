@@ -13,7 +13,7 @@ HTTPASSWD_PASSWD=usuario
 DB_ROOT_PASSWD=root
 # IP de nuestro servidor
 IPPRIVADA=172.31.89.73
-
+# Mostramos comandos
 set -x
 # Actualizamos repositorios
 apt update
@@ -26,26 +26,10 @@ tar -xzvf latest.tar.gz
 # Movemos el contenido de Wordpress al raiz de Apache
 cp -r wordpress/ /var/www/html
 # Copiamos el archivo de configuración php
-cp config.pph /var/www/html/wordpress
-# --------------------------- Instalamos aplicación web -----------------------------
-# Clonamos el repositorio de la aplicación
-cd /var/www/html 
-rm -rf iaw-practica-lamp 
-git clone https://github.com/josejuansanchez/iaw-practica-lamp
-# Movemos el contenido del repositorio al home de html
-mv /var/www/html/iaw-practica-lamp/src/*  /var/www/html/
-# Borramos index.html
-rm index.html
-# Introducimos la base de tados de la aplicación web
-mysql -u root -p$DB_ROOT_PASSWD < /home/ubuntu/iaw-practica-lamp/db/database.sql
+cp config.php /var/www/html/wordpress
 # Cambiamos permisos 
 chown www-data:www-data * -R
 # ------------------------------------ Inslación de herramientas adicionales ------------------------------
-# Descargamos Adminer
-mkdir /var/www/html/adminer 
-cd /var/www/html/adminer 
-wget https://github.com/vrana/adminer/releases/download/v4.7.7/adminer-4.7.7-mysql.php 
-mv adminer-4.7.7-mysql.php index.php
 # Instalamos unzip
 apt install unzip -y
 # Instalación de Phpmyadmin
@@ -61,24 +45,12 @@ rm -rf /var/www/html/phpmyadmin
 mv phpMyAdmin-5.0.4-all-languages /var/www/html/phpmyadmin
 # Configuaramos el archivo config.sample.inc.php
 cp config.inc.php /var/www/html/phpmyadmin/
-# Instalación de GoAccess
-echo "deb http://deb.goaccess.io/ $(lsb_release -cs) main" | sudo tee -a /etc/apt/sources.list.d/goaccess.list 
-wget -O - https://deb.goaccess.io/gnugpg.key | sudo apt-key add - 
-apt-get update 
-apt-get install goaccess -y
-# Creamos el directorio stats.
-mkdir /var/www/html/stats
-# Lazamos el proceso en segundo plano
-nohup goaccess /var/log/apache2/access.log -o /var/www/html/stats/index.html --log-format=COMBINED --real-time-html &
-htpasswd -c -b $HTTPASSWD_DIR/.htpasswd $HTTPASSWD_USER $HTTPASSWD_PASSWD
-# Copiamos el archivo de configuracion de apache
-cp /home/ubuntu/000-default.conf /etc/apache2/sites-available/
 systemctl restart apache2
 # ----------------------------- Back-end -----------------------------------------------------
 # Instalamos el sistema gestor de base de datos
 apt install mysql-server -y
 # Editamos el archivo de configuración de MySQL, modificando la línea 
-sed -i 's/127.0.0.1/localhost/' /etc/mysql/mysql.conf.d/mysqld.cnf 
+sed -i 's/127.0.0.1/0.0.0.0/' /etc/mysql/mysql.conf.d/mysqld.cnf 
 # Reiniciamos el servicio
 sudo /etc/init.d/mysql restart
 # Actualizamos la contraseña de root de MySQL
