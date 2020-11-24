@@ -32,6 +32,10 @@ rm -rf iaw-practica-lamp
 git clone https://github.com/josejuansanchez/iaw-practica-lamp
 # Movemos el contenido del repositorio al home de html
 mv /var/www/html/iaw-practica-lamp/src/*  /var/www/html/
+# Borramos index.html
+rm index.html
+# Introducimos la base de tados de la aplicación web
+mysql -u root -p$DB_ROOT_PASSWD < /home/ubuntu/iaw-practica-lamp/db/database.sql
 # Cambiamos permisos 
 chown www-data:www-data * -R
 # ------------------------------------ Inslación de herramientas adicionales ------------------------------
@@ -54,9 +58,6 @@ rm -rf /var/www/html/phpmyadmin
 # Movemos la carpeta al directorio
 mv phpMyAdmin-5.0.4-all-languages /var/www/html/phpmyadmin
 # Configuaramos el archivo config.sample.inc.php
-# cd /var/www/html/phpmyadmin/
-# sudo cp config.sample.inc.php config.inc.php
-# sudo sed -i "s/localhost/$IPPRIVADA/" /var/www/html/config.inc.php
 cp config.inc.php /var/www/html/phpmyadmin/
 # Instalación de GoAccess
 echo "deb http://deb.goaccess.io/ $(lsb_release -cs) main" | sudo tee -a /etc/apt/sources.list.d/goaccess.list 
@@ -71,7 +72,6 @@ htpasswd -c -b $HTTPASSWD_DIR/.htpasswd $HTTPASSWD_USER $HTTPASSWD_PASSWD
 # Copiamos el archivo de configuracion de apache
 cp /home/ubuntu/000-default.conf /etc/apache2/sites-available/
 systemctl restart apache2
-
 # ----------------------------- Back-end -----------------------------------------------------
 # Instalamos el sistema gestor de base de datos
 apt install mysql-server -y
@@ -80,5 +80,5 @@ mysql -u root <<< "ALTER USER 'root'@'localhost' IDENTIFIED WITH caching_sha2_pa
 mysql -u root <<< "FLUSH PRIVILEGES;"
 # Instalamos los módulos necesarios de PHP
 apt install php libapache2-mod-php php-mysql -y
-# Introducimos la base de tados
+# Introducimos la base de tados de Wordpress
 mysql -u root -p$DB_ROOT_PASSWD < /home/ubuntu/database.sql
