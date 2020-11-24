@@ -4,7 +4,7 @@ Contenido de la **fase00**:
 
 - ```000-default.conf```:
 	- Archivo de configuración con acceso restringido a la carpeta ```stats```. 
-    > :warning: Este archivo lo usaremos si más a delante si queremos instalar herramientas adicionales para nuestro sitio. 
+    > :warning: Este archivo lo usaremos si más a delante queremos instalar herramientas adicionales para nuestro sitio. 
 
 - ```config.inc.php```:
 	- Archivo de configuración php para que los módulos de la base de datos puedan acceder a ella.
