@@ -4,7 +4,9 @@
 # ##### LAMP #####
 # ################
 
-# Configuracion del scritp
+# --------------------------------------------------------------------------
+# #################  Configuracion del scritp  #############################
+# --------------------------------------------------------------------------
 # Definimos la ruta donde vamos a guardar el archivo .htpasswd
 HTTPASSWD_DIR=/home/ubuntu
 HTTPASSWD_USER=usuario
