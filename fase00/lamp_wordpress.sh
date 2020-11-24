@@ -50,9 +50,9 @@ systemctl restart apache2
 # Instalamos el sistema gestor de base de datos
 apt install mysql-server -y
 # Editamos el archivo de configuración de MySQL, modificando la línea 
-sed -i 's/127.0.0.1/0.0.0.0/' /etc/mysql/mysql.conf.d/mysqld.cnf 
+# sed -i 's/127.0.0.1/0.0.0.0/' /etc/mysql/mysql.conf.d/mysqld.cnf 
 # Reiniciamos el servicio
-sudo /etc/init.d/mysql restart
+# sudo /etc/init.d/mysql restart
 # Actualizamos la contraseña de root de MySQL
 mysql -u root <<< "ALTER USER 'root'@'localhost' IDENTIFIED WITH caching_sha2_password BY '$DB_ROOT_PASSWD';" 
 mysql -u root <<< "FLUSH PRIVILEGES;"
