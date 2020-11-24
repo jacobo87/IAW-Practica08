@@ -34,11 +34,11 @@ Las fases son las siguientes:
 ## REFERENCIAS
 - [José Juan Sanchez IAW-Práctica 08](https://josejuansanchez.org/iaw/practica-08/index.html)
 - [Apache HTTP Server](https://www.apache.org/)
-- [proxy inverso](https://httpd.apache.org/docs/trunk/es/howto/reverse_proxy.html)
+- [Proxy inverso](https://httpd.apache.org/docs/trunk/es/howto/reverse_proxy.html)
 - [MySQL](https://www.mysql.com/)
 - [Instalación Wordpress](https://wordpress.org/support/article/how-to-install-wordpress/)
 - [Configuración php Wordpress](https://wordpress.org/support/article/editing-wp-config-php/)
-- [mermaid](https://mermaid-js.github.io/mermaid/#/)
+- [Diagramas con mermaid](https://mermaid-js.github.io/mermaid/#/)
 
 
 
