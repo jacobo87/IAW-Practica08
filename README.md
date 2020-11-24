@@ -32,7 +32,7 @@ Las fases son las siguientes:
 
 
 ## REFERENCIAS
-- https://josejuansanchez.org/iaw/practica-08/index.html
+- [José Juan Sanchez IAW-Práctica 08](https://josejuansanchez.org/iaw/practica-08/index.html)
 - [Apache HTTP Server](https://www.apache.org/)
 - [proxy inverso](https://httpd.apache.org/docs/trunk/es/howto/reverse_proxy.html)
 - [MySQL](https://www.mysql.com/)
