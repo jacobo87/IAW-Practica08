@@ -26,6 +26,7 @@ tar -xzvf latest.tar.gz
 cp -r wordpress/ /var/www/html
 # Copiamos el archivo de configuración php
 cp wp-config.php /var/www/html/wordpress
+rm /var/www/html/index.html
 cp -r /var/www/html/wordpress/* /var/www/html
 # Cambiamos permisos 
 chown www-data:www-data * -R
