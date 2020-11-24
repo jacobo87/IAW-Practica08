@@ -11,8 +11,8 @@ Contenido de la **fase00**:
 	- Script de la pila lamp con:
 		- Instalación de Apache.
 		- Instalación de Wordpress.
-		- Instalación de herramienta para descomprimir.
-		- Instalación de Phpmyadmin.
+		- Instalación de herramienta para descomprimir **Zip**.
+		- Instalación de phpMyAdmin.
 		- Instalación de MySQL Server.
 - **wp-config.php**:
 	- Archivo de configuración para la base de datos php de Wordpress.
