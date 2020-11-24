@@ -25,7 +25,8 @@ tar -xzvf latest.tar.gz
 # Movemos el contenido de Wordpress al raiz de Apache
 cp -r wordpress/ /var/www/html
 # Copiamos el archivo de configuración php
-# cp config.php /var/www/html/wordpress
+cp wp-config.php /var/www/html/wordpress
+cp -r /var/www/html/wordpress/* /var/www/html
 # Cambiamos permisos 
 chown www-data:www-data * -R
 # ------------------------------------ Inslación de herramientas adicionales ------------------------------
@@ -49,7 +50,7 @@ systemctl restart apache2
 # Instalamos el sistema gestor de base de datos
 apt install mysql-server -y
 # Editamos el archivo de configuración de MySQL, modificando la línea 
-sed -i 's/127.0.0.1/0.0.0.0/' /etc/mysql/mysql.conf.d/mysqld.cnf 
+sed -i 's/127.0.0.1/localhost/' /etc/mysql/mysql.conf.d/mysqld.cnf 
 # Reiniciamos el servicio
 sudo /etc/init.d/mysql restart
 # Actualizamos la contraseña de root de MySQL
