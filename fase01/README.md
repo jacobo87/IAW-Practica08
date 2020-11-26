@@ -18,4 +18,9 @@ Contenido de la **fase 01**:
 - ```front.sh y back.sh```:
     - **Scripts** respectivos para la ejecución de **Front-End** y **Back-End**.
 
+
+## REFERENCIAS
+- [José Juan Sanchez IAW-Práctica 08](https://josejuansanchez.org/iaw/practica-08/index.html)
+- [Jacobo Azmani :octocat:](https://github.com/jacobo87/)
+
  

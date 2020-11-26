@@ -38,6 +38,7 @@ Las fases son las siguientes:
 - [MySQL](https://www.mysql.com/)
 - [Instalación Wordpress](https://wordpress.org/support/article/how-to-install-wordpress/)
 - [Configuración php Wordpress](https://wordpress.org/support/article/editing-wp-config-php/)
+- [Jacobo Azmani :octocat:](https://github.com/jacobo87/)
 - [Diagramas con mermaid](https://mermaid-js.github.io/mermaid/#/)
 
 
