@@ -33,6 +33,7 @@ rm latest.tar.gz
 # Movemos el contenido de Wordpress al raiz de Apache
 cp -r wordpress/ /var/www/html
 # Copiamos el archivo de configuración php
+sed -i 's/localhost/$IPMYSQL/' /home/ubuntu/wp-config.php
 cp wp-config.php /var/www/html/wordpress
 rm /var/www/html/index.html
 cp -r /var/www/html/wordpress/* /var/www/html
@@ -53,6 +54,9 @@ rm -rf /var/www/html/phpmyadmin
 # Movemos la carpeta al directorio
 mv phpMyAdmin-5.0.4-all-languages /var/www/html/phpmyadmin
 # Configuaramos el archivo config.sample.inc.php
-sed -i 's/localhost/$IPMYSQL/' /home/ubuntu
+sed -i 's/localhost/$IPMYSQL/' /home/ubuntu/config.inc.php 
 cp config.inc.php /var/www/html/phpmyadmin/
 systemctl restart apache2
+
+# Borramos lo que no necesitamos
+rm back.sh README.md database.sql
