@@ -22,3 +22,4 @@ Contenido de la **fase00**:
 
 - ```info.php```:
 	- Archivo de información php.
+    > :warning: Este archivo debemos de borrarlo una vez comprobemos que está todo instalado correctamente. 
