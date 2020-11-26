@@ -1,5 +1,5 @@
 # Fase 01 
-## Instalación de Wordpress en dos niveles (Servidor web, Servidor MySQL).
+### Instalación de Wordpress en dos niveles (Servidor web, Servidor MySQL).
 Contenido de la **fase 01**:
 
 - ```config.inc.php```:
@@ -16,6 +16,6 @@ Contenido de la **fase 01**:
     > :warning: Este archivo debemos de borrarlo una vez comprobemos que está todo instalado correctamente. 
 
 - ```front.sh y back.sh```:
-    - Scripts respectivos para la ejecución de **Front-End** y **Back-End**.
+    - **Scripts** respectivos para la ejecución de **Front-End** y **Back-End**.
 
  
