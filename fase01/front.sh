@@ -3,7 +3,7 @@
 # ################
 # ##### FRONT #####
 # ################
-
+IPMYSQL=172.31.20.186
 # --------------------------------------------------------------------------
 # #################  Configuracion del scritp  #############################
 # --------------------------------------------------------------------------
@@ -53,5 +53,6 @@ rm -rf /var/www/html/phpmyadmin
 # Movemos la carpeta al directorio
 mv phpMyAdmin-5.0.4-all-languages /var/www/html/phpmyadmin
 # Configuaramos el archivo config.sample.inc.php
+sed -i 's/localhost/$IPMYSQL/' /home/ubuntu
 cp config.inc.php /var/www/html/phpmyadmin/
 systemctl restart apache2
