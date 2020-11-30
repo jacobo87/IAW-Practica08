@@ -37,7 +37,6 @@ cp -r wordpress/ /var/www/html
 sed -i "s/localhost/$IPMYSQL/" /home/ubuntu/wp-config.php
 cp wp-config.php /var/www/html/wordpress
 rm /var/www/html/index.html
-cp -r /var/www/html/wordpress/* /var/www/html
 # Cambiamos permisos 
 chown www-data:www-data * -R
 # ------------------------------------ Inslación de herramientas adicionales ------------------------------
