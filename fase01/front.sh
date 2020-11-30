@@ -23,6 +23,7 @@ apt update
 apt install apache2 -y
 # Instalamos los módulos necesarios de PHP
 apt install php libapache2-mod-php php-mysql -y
+# Habilitamos el modulo mod_rewrite
 # Copiamos info.php
 cp info.php /var/www/html
 # Instalamos Wordpress
@@ -56,7 +57,12 @@ mv phpMyAdmin-5.0.4-all-languages /var/www/html/phpmyadmin
 # Configuaramos el archivo config.sample.inc.php
 sed -i "s/localhost/$IPMYSQL/" /home/ubuntu/config.inc.php 
 cp config.inc.php /var/www/html/phpmyadmin/
+rm /var/www/html/index.html
+# Copiamos el archivo index.php
+cp /var/www/html/wordpress/index.php /var/www/html/
+# modificamos el directorio por defecto
+sed -i "s#wp-blog-header.php#/wordpress/wp-blog-header.php#" /var/www/html/
+# Reiniciamos Apache
 systemctl restart apache2
-
 # Borramos lo que no necesitamos
 rm back.sh README.md database.sql

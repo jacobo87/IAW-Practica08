@@ -67,6 +67,13 @@ mysql -u root <<< "ALTER USER 'root'@'localhost' IDENTIFIED WITH caching_sha2_pa
 mysql -u root <<< "FLUSH PRIVILEGES;"
 # Instalamos los módulos necesarios de PHP
 apt install php libapache2-mod-php php-mysql -y
+# Creamos la base de datos para wordpress
+mysql -u root <<< "DROP DATABASE IF EXISTS wp_db;"
+mysql -u root <<< "CREATE DATABASE wp_db CHARSET utf8mb4;"
+mysql -u root <<< "USE wp_db;"
+mysql -u root <<< "CREATE USER IF NOT EXISTS 'wp_user'@'localhost';"
+mysql -u root <<< "SET PASSWORD FOR 'wp_user'@'localhost' = 'wp_pass';"
+mysql -u root <<< "GRANT ALL PRIVILEGES ON wp_db.* TO 'wp_user'@'%';"
 # Introducimos la base de tados de Wordpress
-mysql -u root -p$DB_ROOT_PASSWD < /home/ubuntu/database.sql
+# mysql -u root -p$DB_ROOT_PASSWD < /home/ubuntu/database.sql
 
