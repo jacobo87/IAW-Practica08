@@ -9,7 +9,10 @@ IPWEB=172.31.63.190
 # --------------------------------------------------------------------------
 # Definimos la contraseña de root como variable
 DB_ROOT_PASSWD=root
-
+# Variable de la DB
+WPDB=wp_db
+WPUSER=wp_user
+WPPASS=wp_pass
 # Mostramos comandos
 set -x
 # Actualizamos repositorios
@@ -26,8 +29,15 @@ mysql -u root <<< "ALTER USER 'root'@'localhost' IDENTIFIED WITH caching_sha2_pa
 mysql -u root <<< "FLUSH PRIVILEGES;"
 # Instalamos los módulos necesarios de PHP
 apt install php libapache2-mod-php php-mysql -y
+# Creamos la base de datos para wordpress
+mysql -u root <<< "DROP DATABASE IF EXISTS $WPDB;"
+mysql -u root <<< "CREATE DATABASE $WPDB CHARSET utf8mb4;"
+mysql -u root <<< "USE $WPDB;"
+mysql -u root <<< "CREATE USER IF NOT EXISTS '$WPUSER'@'localhost';"
+mysql -u root <<< "SET PASSWORD FOR '$WPUSER'@'localhost' = '$WPPASS';"
+mysql -u root <<< "GRANT ALL PRIVILEGES ON $WPDB.* TO 'WPUSER'@'%';"
 # Introducimos la base de tados de Wordpress
-mysql -u root -p$DB_ROOT_PASSWD < /home/ubuntu/database.sql
+# mysql -u root -p$DB_ROOT_PASSWD < /home/ubuntu/database.sql
 
 # Borramos lo que no necesitamos
 rm front.sh README.md info.php wp-config.php 
