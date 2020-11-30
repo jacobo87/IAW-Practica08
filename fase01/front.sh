@@ -34,7 +34,21 @@ rm latest.tar.gz
 # Copiamos el archivo de configuración php
 sed -i "s/localhost/$IPMYSQL/" /home/ubuntu/wp-config.php
 # Modificamos Unique Keys del archivo de configuracion de WP
-# sed -i "s/" 
+# Borramos 
+sed -i "/AUTH_KEY/d"         
+sed -i "SECURE_AUTH_KEY/d"  
+sed -i "LOGGED_IN_KEY/d"    
+sed -i "NONCE_KEY/d"        
+sed -i "AUTH_SALT/d"        
+sed -i "SECURE_AUTH_SALT/d" 
+sed -i "LOGGED_IN_SALT/d"   
+sed -i "NONCE_SALT/d"
+
+SECURITY_KEYS=$(https://api.wordpress.org/secret-key/1.1/salt/)
+
+# Busca el contenido y lo añade después
+sed -i "/@-/a $SECURITY_KEYS/" wp-config.php
+
 cp wp-config.php /var/www/html/wordpress
 rm /var/www/html/index.html
 # Cambiamos permisos 
