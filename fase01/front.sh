@@ -31,10 +31,10 @@ wget https://wordpress.org/latest.tar.gz
 tar -xzvf latest.tar.gz
 # Eliminamos .tar.gz
 rm latest.tar.gz
-# Movemos el contenido de Wordpress al raiz de Apache
-cp -r wordpress/ /var/www/html
 # Copiamos el archivo de configuración php
 sed -i "s/localhost/$IPMYSQL/" /home/ubuntu/wp-config.php
+# Modificamos Unique Keys del archivo de configuracion de WP
+# sed -i "s/" 
 cp wp-config.php /var/www/html/wordpress
 rm /var/www/html/index.html
 # Cambiamos permisos 
