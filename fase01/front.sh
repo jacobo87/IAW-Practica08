@@ -36,7 +36,7 @@ sed -i "s/localhost/$IPMYSQL/" /home/ubuntu/wp-config.php
 # Modificamos Unique Keys del archivo de configuracion de WP
 # Borramos 
 sed -i "/AUTH_KEY/d" /var/www/html/wordpress/wp-config.php       
-sed -i "SECURE_AUTH_KEY/d"  /var/www/html/wordpress/wp-config.php
+sed -i "SECURE_AUTH_KEY/d" /var/www/html/wordpress/wp-config.php
 sed -i "LOGGED_IN_KEY/d" /var/www/html/wordpress/wp-config.php   
 sed -i "NONCE_KEY/d" /var/www/html/wordpress/wp-config.php       
 sed -i "AUTH_SALT/d" /var/www/html/wordpress/wp-config.php       
