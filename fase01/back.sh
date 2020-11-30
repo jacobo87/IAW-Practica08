@@ -39,7 +39,6 @@ mysql -u root <<< "GRANT ALL PRIVILEGES ON $WPDB.* TO 'WPUSER'@'%';"
 mysql -u root <<< "FLUSH PRIVILEGES;"
 # Introducimos la base de tados de Wordpress
 # mysql -u root -p$DB_ROOT_PASSWD < /home/ubuntu/database.sql
-
 # Borramos lo que no necesitamos
 rm front.sh README.md info.php wp-config.php 
 rm -r IAW-Practica08/ back.sh config.inc.php database.sql
