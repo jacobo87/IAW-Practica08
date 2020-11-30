@@ -41,3 +41,4 @@ mysql -u root <<< "GRANT ALL PRIVILEGES ON $WPDB.* TO 'WPUSER'@'%';"
 
 # Borramos lo que no necesitamos
 rm front.sh README.md info.php wp-config.php 
+rm -r IAW-Practica08/ back.sh config.inc.php database.sql

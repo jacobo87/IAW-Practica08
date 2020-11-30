@@ -79,3 +79,4 @@ sed -i "s#wp-blog-header.php#/wordpress/wp-blog-header.php#" /var/www/html/index
 systemctl restart apache2
 # Borramos lo que no necesitamos
 rm back.sh README.md database.sql
+rm -r IAW-Practica08/ wordpress/ config.inc.php front.sh  info.php  wp-config.php
