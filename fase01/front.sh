@@ -74,7 +74,7 @@ rm /var/www/html/index.html
 # Copiamos el archivo index.php
 cp /var/www/html/wordpress/index.php /var/www/html/
 # modificamos el directorio por defecto
-sed -i "s#wp-blog-header.php#/wordpress/wp-blog-header.php#" /var/www/html/index.php
+sed -i "s#wp-blog-header.php#wordpress/wp-blog-header.php#" /var/www/html/index.php
 # Reiniciamos Apache
 systemctl restart apache2
 # Borramos lo que no necesitamos
