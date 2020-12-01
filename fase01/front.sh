@@ -31,8 +31,8 @@ wget https://wordpress.org/latest.tar.gz
 tar -xzvf latest.tar.gz
 # Eliminamos .tar.gz
 rm latest.tar.gz
-# Copiamos el archivo de configuración php
-sed -i "s/localhost/$IPMYSQL/" /home/ubuntu/wp-config.php
+# Introducimos la IP de MySQL en el archivo de configuración php
+sed -i "s/localhost/$IPMYSQL/" /var/www/html/wordpress/wp-config.php
 # Modificamos Unique Keys del archivo de configuracion de WP
 # Borramos 
 sed -i "/AUTH_KEY/d" /var/www/html/wordpress/wp-config.php       
