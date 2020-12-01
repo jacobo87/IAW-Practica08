@@ -26,8 +26,13 @@ apt install php libapache2-mod-php php-mysql -y
 # Habilitamos el modulo mod_rewrite
 # Copiamos info.php
 cp info.php /var/www/html
+# Nos movemos al directorio de Apache
+cd /var/www/html
 # Instalamos Wordpress
 wget https://wordpress.org/latest.tar.gz
+# Eliminiamos instalaciones anteriores
+rm -rf /var/www/html/wordpress
+# Descomprimimos .tar .gz
 tar -xzvf latest.tar.gz
 # Eliminamos .tar.gz
 rm latest.tar.gz
@@ -48,7 +53,7 @@ SECURITY_KEYS=`curl https://api.wordpress.org/secret-key/1.1/salt/`
 # Reemplaza el caracter / por el _
 SECURITY_KEYS=$(echo $SECURITY_KEYS | tr / _)
 # Busca el contenido y lo añade después
-sed -i "s/@-/a $SECURITY_KEYS/" /var/www/html/wordpress/wp-config.php
+sed -i "/@-/a $SECURITY_KEYS/" /var/www/html/wordpress/wp-config.php
 # cp wp-config.php /var/www/html/wordpress
 rm /var/www/html/index.html
 # Cambiamos permisos 
