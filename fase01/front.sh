@@ -19,6 +19,8 @@ set -x
 # Actualizamos repositorios
 apt update
 # ------------------------------ Instalamos Front-end ----------------------------------------
+# Eliminamos instalaciones anteriones
+rm -rf /var/www/html/*
 # Instalamos Servidor Web Apache
 apt install apache2 -y
 # Instalamos los módulos necesarios de PHP
