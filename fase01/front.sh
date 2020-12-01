@@ -48,7 +48,7 @@ SECURITY_KEYS=`curl https://api.wordpress.org/secret-key/1.1/salt/`
 # Reemplaza el caracter / por el _
 SECURITY_KEYS=$(echo $SECURITY_KEYS | tr / _)
 # Busca el contenido y lo añade después
-sed -i "/@-/a $SECURITY_KEYS/" /var/www/html/wordpress/wp-config.php
+sed -i "s/@-/a $SECURITY_KEYS/" /var/www/html/wordpress/wp-config.php
 # cp wp-config.php /var/www/html/wordpress
 rm /var/www/html/index.html
 # Cambiamos permisos 
