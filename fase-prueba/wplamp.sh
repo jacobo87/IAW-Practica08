@@ -1,100 +1,137 @@
-#! /bin/bash
-# ################
-# ##### FRONT #####
-# ################
-# --------------------------------------------------------------------------
-# #################  Configuracion del scritp  #############################
-# --------------------------------------------------------------------------
-# Definimos la contraseña de root como variable
+#!/bin/bash
+
+# ####################################
+# ## CONFIGURACIÓN DE LAS VARIABLES ##
+# ####################################
+
+# Directorio de usuario #
+HTTPASSWD_DIR=/home/ubuntu
+
+# MySQL #
 DB_ROOT_PASSWD=root
-# Mostramos comandos
+DB_NAME=wordpress_db
+DB_USER=wordpress_user
+DB_PASSWORD=wordpress_password
+IP_BALANCEADOR=
+#IP_MYSQL_SERVER=
+
+# PhPMyAdmin #
+PHPMYADMIN_PASSWD=`tr -dc A-Za-z0-9 < /dev/urandom | head -c 64`
+
+
+# #################################
+# ## Instalación de la pila LAMP ##
+# #################################
+
 set -x
-# Actualizamos repositorios
+# Actualizamos los repositorios
 apt update
-# ------------------------------ Instalamos Front-end ----------------------------------------
-# Eliminamos instalaciones anteriones
-rm -rf /var/www/html/*
-# Instalamos Servidor Web Apache
+# Instalamos Apache 
 apt install apache2 -y
-# Instalamos los módulos necesarios de PHP
+# Instalamos MySQL Server 
+apt install mysql-server -y
+# Instalamos módulos PHP 
 apt install php libapache2-mod-php php-mysql -y
-# Habilitamos el modulo mod_rewrite
-# Copiamos info.php
-cp info.php /var/www/html
-# Nos movemos al directorio de Apache
+# Reiniciamos el servicio Apache 
+systemctl restart apache2
+# Copiamos el archivo info.php al directorio html 
+cp $HTTPASSWD_DIR/info.php /var/www/html
+
+# Configuramos las opciones de instalación de phpMyAdmin
+echo "phpmyadmin phpmyadmin/reconfigure-webserver multiselect apache2" | debconf-set-selections
+echo "phpmyadmin phpmyadmin/dbconfig-install boolean true" | debconf-set-selections
+echo "phpmyadmin phpmyadmin/mysql/app-pass password $PHPMYADMIN_PASSWD" |debconf-set-selections
+echo "phpmyadmin phpmyadmin/app-password-confirm password $PHPMYADMIN_PASSWD" | debconf-set-selections
+
+# Instalamos phpMyAdmin 
+apt install phpmyadmin php-mbstring php-zip php-gd php-json php-curl -y
+
+# ##############################
+# ## Instalación de Wordpress ##
+# ##############################
+
+# Nos movemos al raíz de Apache 
 cd /var/www/html
-# Instalamos Wordpress
-wget https://wordpress.org/latest.tar.gz
-# Eliminiamos instalaciones anteriores
+
+# Descargamos la última versión de Wordpress 
+wget http://wordpress.org/latest.tar.gz
+# Eliminamos instalaciones anteriores 
 rm -rf /var/www/html/wordpress
-# Descomprimimos .tar .gz
+# Descomprimimos el archivo que acabamos de descargar 
 tar -xzvf latest.tar.gz
-# Eliminamos .tar.gz
+# Eliminamos lo que ya no necesitamos 
 rm latest.tar.gz
-# Copiamos el archivo de configuración
-cp /home/ubuntu/wp-config.php /var/www/html/wordpress/
-# Introducimos la IP de MySQL en el archivo de configuración php
-# sed -i "s/localhost/$IPMYSQL/" /var/www/html/wordpress/wp-config.php
-# Modificamos Unique Keys del archivo de configuracion de WP borramos wp-config.conf
-sed -i "/AUTH_KEY/d" /var/www/html/wordpress/wp-config.php       
+
+
+# Creamos la base de datos que vamos a usar con Wordpress #
+
+# Nos aseguramos que no existe ya, y si existe la borramos
+mysql -u root <<< "DROP DATABASE IF EXISTS $DB_NAME;"
+# Creamos la base de datos
+mysql -u root <<< "CREATE DATABASE $DB_NAME;"
+# Nos aseguramos que no existe el usuario
+mysql -u root <<< "DROP USER IF EXISTS $DB_USER@localhost;"
+# Creamos el usuario para Wordpress
+mysql -u root <<< "CREATE USER $DB_USER@localhost IDENTIFIED BY '$DB_PASSWORD';"
+# Concedemos privilegios al usuario que acabamos de crear
+mysql -u root <<< "GRANT ALL PRIVILEGES ON $DB_NAME.* TO $DB_USER@localhost;"
+# Aplicamos cambios
+mysql -u root <<< "FLUSH PRIVILEGES;"
+
+
+# Borramos el index.html de Apache
+rm /var/www/html/index.html
+
+
+# Configuramos el archivo wp-config.php #
+
+# Renombramos el archivo config
+mv /var/www/html/wordpress/wp-config-sample.php /var/www/html/wordpress/wp-config.php
+
+# Definimos variables dentro del archivo config
+sed -i "s/database_name_here/$DB_NAME/" /var/www/html/wordpress/wp-config.php
+sed -i "s/username_here/$DB_USER/" /var/www/html/wordpress/wp-config.php
+sed -i "s/password_here/$DB_PASSWORD/" /var/www/html/wordpress/wp-config.php
+#sed -i "s/localhost/$IP_MYSQL_SERVER/" /var/www/html/wordpress/wp-config.php
+
+
+# Configuración de Wordpress en un directorio que no es el raíz #
+
+# Cambiamos la url de WordPress con WP_SITEURL y WP_HOME 
+#sed -i "#DB_COLLATE#a define( 'WP_SITEURL', 'http://$IP_BALANCEADOR/wordpress' );" /var/www/html/wordpress/wp-config.php
+#sed -i "#WP_SITEURL#a define( 'WP_HOME', 'http://$IP_BALANCEADOR' );" /var/www/html/wordpress/wp-config.php
+#[SEGUIMOS HACIÉNDOLO MANUALMENTE, NO SABEMOS CÓMO AUTOMATIZAR]----------------------------------------------------------
+
+# Copiamos el archivo /var/www/html/wordpress/index.php a /var/www/html/index.php
+cp /var/www/html/wordpress/index.php  /var/www/html/index.php
+
+# Editamos el archivo /var/www/html/index.php
+sed -i "s#/wp-blog-header.php#/wordpress/wp-blog-header.php#" /var/www/html/index.php
+
+# Copiamos el archivo htaccess 
+cp $HTTPASSWD_DIR/htaccess /var/www/html/.htaccess
+
+# Configuramos las keys para el cifrado de las cookies #
+
+# Borramos el bloque que nos viene por defecto en el archivo de configuración
+sed -i "/AUTH_KEY/d" /var/www/html/wordpress/wp-config.php
 sed -i "/SECURE_AUTH_KEY/d" /var/www/html/wordpress/wp-config.php
-sed -i "/LOGGED_IN_KEY/d" /var/www/html/wordpress/wp-config.php   
-sed -i "/NONCE_KEY/d" /var/www/html/wordpress/wp-config.php       
-sed -i "/AUTH_SALT/d" /var/www/html/wordpress/wp-config.php       
+sed -i "/LOGGED_IN_KEY/d" /var/www/html/wordpress/wp-config.php
+sed -i "/NONCE_KEY/d" /var/www/html/wordpress/wp-config.php
+sed -i "/AUTH_SALT/d" /var/www/html/wordpress/wp-config.php
 sed -i "/SECURE_AUTH_SALT/d" /var/www/html/wordpress/wp-config.php
-sed -i "/LOGGED_IN_SALT/d" /var/www/html/wordpress/wp-config.php  
+sed -i "/LOGGED_IN_SALT/d" /var/www/html/wordpress/wp-config.php
 sed -i "/NONCE_SALT/d" /var/www/html/wordpress/wp-config.php
-# Creamos la variable con la salida de la api
-SECURITY_KEYS=`curl https://api.wordpress.org/secret-key/1.1/salt/`
-# Reemplaza el caracter / por el _
+
+# Definimos la variable SECURITY_KEYS haciendo una llamada a la API de Wordpress
+SECURITY_KEYS=$(curl https://api.wordpress.org/secret-key/1.1/salt/)
+# Reemplazamos "/" por "_" para que no nos falle el comando sed
 SECURITY_KEYS=$(echo $SECURITY_KEYS | tr / _)
-# Busca el contenido y lo añade después
-sed -i "/@-/a $SECURITY_KEYS/" /var/www/html/wordpress/wp-config.php
-# cp wp-config.php /var/www/html/wordpress
-rm /var/www/html/index.html
-# Cambiamos permisos 
-chown www-data:www-data * -R
-rm /var/www/html/index.html
-# Copiamos el archivo index.php
-cp /var/www/html/wordpress/index.php /var/www/html/
-# modificamos el directorio por defecto
-# sed -i "s#wp-blog-header.php#wordpress/wp-blog-header.php#" /var/www/html/index.php
+# Creamos un nuevo bloque de SECURITY KEYS
+sed -i "/@-/a $SECURITY_KEYS" /var/www/html/wordpress/wp-config.php
+
+# Habilitamos el módulo rewrite (reescritura de las url)
+a2enmod rewrite
+
 # Reiniciamos Apache
 systemctl restart apache2
-# ################
-# ##### BACK #####
-# ################
-# --------------------------------------------------------------------------
-# #################  Configuracion del scritp  #############################
-# --------------------------------------------------------------------------
-# Definimos la contraseña de root como variable
-DB_ROOT_PASSWD=root
-# Variable de la DB
-WPDB=wp_db
-WPUSER=wp_user
-WPPASS=wp_pass
-# ----------------------------- Back-end -----------------------------------------------------
-# Instalamos el sistema gestor de base de datos
-apt install mysql-server -y
-# Instalamos los módulos necesarios de PHP
-apt install php libapache2-mod-php php-mysql -y
-# Editamos el archivo de configuración de MySQL, modificando la línea 
-# sed -i "s/127.0.0.1/$IPWEB/" /etc/mysql/mysql.conf.d/mysqld.cnf 
-# Reiniciamos el servicio
-sudo /etc/init.d/mysql restart
-# Actualizamos la contraseña de root de MySQL
-mysql -u root <<< "ALTER USER 'root'@'localhost' IDENTIFIED WITH caching_sha2_password BY '$DB_ROOT_PASSWD';" 
-# mysql -u root <<< "FLUSH PRIVILEGES;"
-# Creamos la base de datos para wordpress
-mysql -u root <<< "DROP DATABASE IF EXISTS $WPDB;"
-mysql -u root <<< "CREATE DATABASE $WPDB CHARSET utf8mb4;"
-mysql -u root <<< "USE $WPDB;"
-mysql -u root <<< "CREATE USER IF NOT EXISTS '$WPUSER'@'localhost';"
-mysql -u root <<< "SET PASSWORD FOR '$WPUSER'@'localhost' = '$WPPASS';"
-mysql -u root <<< "GRANT ALL PRIVILEGES ON $WPDB.* TO 'WPUSER'@'%';"
-mysql -u root <<< "FLUSH PRIVILEGES;"
-# Introducimos la base de tados de Wordpress
-# mysql -u root -p$DB_ROOT_PASSWD < /home/ubuntu/database.sql
-# Borramos lo que no necesitamos
-rm front.sh README.md info.php wp-config.php 
-rm -r IAW-Practica08/ back.sh config.inc.php database.sql
