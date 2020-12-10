@@ -13,7 +13,8 @@ HTTPASSWD_USER=usuario
 HTTPASSWD_PASSWD=usuario
 # Definimos la contraseña de root como variable
 DB_ROOT_PASSWD=root
-
+# PhPMyAdmin #
+PHPMYADMIN_PASSWD=`tr -dc A-Za-z0-9 < /dev/urandom | head -c 64`
 # Mostramos comandos
 set -x
 # Actualizamos repositorios
@@ -51,16 +52,21 @@ sed -i "/AUTH_SALT/d" /var/www/html/wordpress/wp-config.php
 sed -i "/SECURE_AUTH_SALT/d" /var/www/html/wordpress/wp-config.php
 sed -i "/LOGGED_IN_SALT/d" /var/www/html/wordpress/wp-config.php  
 sed -i "/NONCE_SALT/d" /var/www/html/wordpress/wp-config.php
-# Creamos la variable con la salida de la api
-SECURITY_KEYS=`curl https://api.wordpress.org/secret-key/1.1/salt/`
-# Reemplaza el caracter / por el _
+# Definimos la variable SECURITY_KEYS haciendo una llamada a la API de Wordpress
+SECURITY_KEYS=$(curl https://api.wordpress.org/secret-key/1.1/salt/)
+# Reemplazamos "/" por "_" para que no nos falle el comando sed
 SECURITY_KEYS=$(echo $SECURITY_KEYS | tr / _)
-# Busca el contenido y lo añade después
-sed -i "/@-/a $SECURITY_KEYS/" /var/www/html/wordpress/wp-config.php
-# cp wp-config.php /var/www/html/wordpress
-rm /var/www/html/index.html
-# Cambiamos permisos 
-chown www-data:www-data * -R
+# Creamos un nuevo bloque de SECURITY KEYS
+sed -i "/@-/a $SECURITY_KEYS" /var/www/html/wordpress/wp-config.php
+
+# Habilitamos el módulo rewrite (reescritura de las url)
+a2enmod rewrite
+
+# Le damos permiso a la carpeta de wordpress
+chown -R www-data:www-data /var/www/html
+
+# Reiniciamos Apache
+systemctl restart apache2
 # ------------------------------------ Inslación de herramientas adicionales ------------------------------
 # Instalamos unzip
 apt install unzip -y
