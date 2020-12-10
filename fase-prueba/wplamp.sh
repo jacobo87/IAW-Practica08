@@ -133,5 +133,8 @@ sed -i "/@-/a $SECURITY_KEYS" /var/www/html/wordpress/wp-config.php
 # Habilitamos el módulo rewrite (reescritura de las url)
 a2enmod rewrite
 
+# Le damos permiso a la carpeta de wordpress
+chown -R www-data:www-data /var/www/html
+
 # Reiniciamos Apache
 systemctl restart apache2
