@@ -26,9 +26,6 @@ sed -i "s/127.0.0.1/$IPWEB/" /etc/mysql/mysql.conf.d/mysqld.cnf
 sudo /etc/init.d/mysql restart
 # Actualizamos la contraseña de root de MySQL
 mysql -u root <<< "ALTER USER 'root'@'localhost' IDENTIFIED WITH caching_sha2_password BY '$DB_ROOT_PASSWD';" 
-# mysql -u root <<< "FLUSH PRIVILEGES;"
-# Instalamos los módulos necesarios de PHP
-apt install php libapache2-mod-php php-mysql -y
 # Creamos la base de datos para wordpress
 mysql -u root <<< "DROP DATABASE IF EXISTS $WPDB;"
 mysql -u root <<< "CREATE DATABASE $WPDB CHARSET utf8mb4;"
