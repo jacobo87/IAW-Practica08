@@ -33,8 +33,8 @@ apt install php libapache2-mod-php php-mysql -y
 mysql -u root <<< "DROP DATABASE IF EXISTS $WPDB;"
 mysql -u root <<< "CREATE DATABASE $WPDB CHARSET utf8mb4;"
 mysql -u root <<< "USE $WPDB;"
-mysql -u root <<< "CREATE USER IF NOT EXISTS '$WPUSER'@'localhost';"
-mysql -u root <<< "SET PASSWORD FOR '$WPUSER'@'localhost' = '$WPPASS';"
+mysql -u root <<< "CREATE USER IF NOT EXISTS '$WPUSER'@'%';"
+mysql -u root <<< "SET PASSWORD FOR '$WPUSER'@'%' = '$WPPASS';"
 mysql -u root <<< "GRANT ALL PRIVILEGES ON $WPDB.* TO 'WPUSER'@'%';"
 mysql -u root <<< "FLUSH PRIVILEGES;"
 # Introducimos la base de tados de Wordpress
