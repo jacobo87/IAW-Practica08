@@ -89,6 +89,8 @@ rm /var/www/html/index.html
 cp /var/www/html/wordpress/index.php /var/www/html/
 # modificamos el directorio por defecto
 sed -i "s#wp-blog-header.php#wordpress/wp-blog-header.php#" /var/www/html/index.php
+# Le damos permiso a la carpeta de wordpress
+chown -R www-data:www-data /var/www/html
 # Reiniciamos Apache
 systemctl restart apache2
 # Borramos lo que no necesitamos
