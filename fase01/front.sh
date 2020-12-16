@@ -72,6 +72,11 @@ SECURITY_KEYS=$(echo $SECURITY_KEYS | tr / _)
 # Creamos un nuevo bloque de SECURITY KEYS
 sed -i "/@-/a $SECURITY_KEYS" /var/www/html/wordpress/wp-config.php
 
+# Añadimos la ruta por defecto de wordpress
+sed -i "/COLLATE/a define( 'WP_HOME', 'http://34.229.49.30' );" /var/www/html/wordpress/wp-config.php
+sed -i "/COLLATE/a define( 'WP_SITEURL', 'http://34.229.49.30/wordpress');" /var/www/html/wordpress/wp-config.php
+
+
 # Habilitamos el módulo rewrite (reescritura de las url)
 a2enmod rewrite
 
